@@ -53,20 +53,7 @@
 <script src="js/registerItemEvent.js" type="text/javascript"></script>
 <script>
   $(document).ready(function () {
-    $.get(url + "/items/itemlist/", function (data, status) {
-      for (var i = 0; i < data.length; i++) {
-        var item = data[i];
-        if (item.urgency != "finished") continue;
-        var new_item = newItem(item.title, item.content, item.urgency, item.last_modified_time, item.id);
-        var new_form = newEditForm(item.title, item.content, item.urgency, item.id);
-        $(".todoItems").append(new_item);
-        var todo_item = getItemById(item.id);
-        todo_item.show();
-        todo_item.find(".panel-body").append(new_form);
-        getFormById(item.id).hide();
-        registerItemEvent(todo_item);
-      }
-    });
+    initAllItems("latest_first", "finished");
   });
 </script>
 </body>
