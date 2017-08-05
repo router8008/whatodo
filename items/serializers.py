@@ -11,6 +11,23 @@ class TodoItemSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'content', 'created_time', 'last_modified_time', 'urgency')
 
 
+class ListTodoItemAPISerializer(serializers.Serializer):
+    ORDER_CHOICES = (
+        ('latest_first', 'latest_first'),
+        ('oldest_first', 'oldest_first'),
+        ('most_important', 'most_important'),
+        ('least_important', 'least_important'),
+    )
+    URGENCY_FILTER_CHOICE = (
+        ('vital', 'vital'),
+        ('important', 'important'),
+        ('normal', 'normal'),
+        ("all", "all"),
+    )
+    order_by = serializers.ChoiceField(choices=ORDER_CHOICES, default="latest_first")
+    urgency_filter = serializers.ChoiceField(choices=URGENCY_FILTER_CHOICE, default="all")
+
+
 class AddTodoItemAPISerializer(serializers.Serializer):
     title = serializers.CharField(max_length=100)
     content = serializers.CharField(max_length=1000, default="")

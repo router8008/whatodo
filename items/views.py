@@ -8,8 +8,12 @@ from .models import *
 from .serializers import *
 
 
-class TodoItemListAPIView(APIView):
+class ListTodoItemAPIView(APIView):
+    serializer_class = ListTodoItemAPISerializer
     def get(self, request):
+        serializer = self.serializer_class(data=request.query_params)
+        serializer.is_valid(raise_exception=True)
+        orderby = serializer.validated_data.get('title')
         result_list = list()
         todo_items = TodoItem.objects.all()
         for todo_item in todo_items:
