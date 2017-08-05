@@ -22,6 +22,7 @@ class ListTodoItemAPISerializer(serializers.Serializer):
         ('vital', 'vital'),
         ('important', 'important'),
         ('normal', 'normal'),
+        ('finished', 'finished'),
         ("all", "all"),
     )
     order_by = serializers.ChoiceField(choices=ORDER_CHOICES, default="latest_first")

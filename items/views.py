@@ -10,16 +10,44 @@ from .serializers import *
 
 class ListTodoItemAPIView(APIView):
     serializer_class = ListTodoItemAPISerializer
+
     def get(self, request):
         serializer = self.serializer_class(data=request.query_params)
         serializer.is_valid(raise_exception=True)
-        orderby = serializer.validated_data.get('title')
+        order_by = serializer.validated_data.get('order_by')
+        urgency_filter = serializer.validated_data.get('urgency_filter')
+
         result_list = list()
-        todo_items = TodoItem.objects.all()
+        if urgency_filter != 'all':
+            todo_items = TodoItem.objects.filter(urgency=urgency_filter)
+        else:
+            todo_items = TodoItem.objects.filter(urgency__in=('normal', 'important', 'vital'))
+            if order_by == 'latest_first':
+                todo_items = todo_items.order_by('-created_time')
+            elif order_by == 'oldest_first':
+                todo_items = todo_items.order_by('created_time')
+            # ordered by urgency
+            else:
+                normal_items = todo_items.filter(urgency='normal')
+                important_items = todo_items.filter(urgency='important')
+                vital_items = todo_items.filter(urgency='vital')
+                items_list = list()
+                if order_by == 'most_important':
+                    items_list = [vital_items, important_items, normal_items]
+                elif order_by == 'least_important':
+                    items_list = [normal_items, important_items, vital_items]
+                for items in items_list:
+                    for todo_item in items:
+                        item_dict = TodoItemSerializer(todo_item).data
+                        result_list.append(item_dict)
+                return Response(result_list)
+        # ordered by time
         for todo_item in todo_items:
             item_dict = TodoItemSerializer(todo_item).data
             result_list.append(item_dict)
         return Response(result_list)
+
+
 
 
 class AddTodoItemAPIView(APIView):

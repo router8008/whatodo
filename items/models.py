@@ -21,3 +21,4 @@ class TodoItem(models.Model):
     class Meta:
         verbose_name = "Todo Item"
         verbose_name_plural = "Todo Items"
+        ordering = ['-created_time']
