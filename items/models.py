@@ -6,10 +6,11 @@ class TodoItem(models.Model):
         ('vital', 'vital'),
         ('important', 'important'),
         ('normal', 'normal'),
+        ("finished", "finished"),
     )
 
     title = models.CharField(max_length=100)
-    content = models.TextField()
+    content = models.TextField(default="")
     created_time = models.DateTimeField(auto_now_add=True)
     last_modified_time = models.DateTimeField(auto_now=True)
     urgency = models.CharField(max_length=15, choices=URGENCY_CHOICES, default='normal')
