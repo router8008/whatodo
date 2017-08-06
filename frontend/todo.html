@@ -23,25 +23,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="undo.html">Whatodo</a>
+          <a class="navbar-brand" href="todo.html">Whatodo</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="undo.html">Undos</a></li>
-            <li><a href="finished.html">Finished </a></li>
+            <li class="active"><a href="todo.html">Todos</a></li>
+            <li><a href="completed.html">Completed</a></li>
 
-            <form class="navbar-form navbar-left" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
-              </div>
-              <button type="submit" class="btn btn-default">Submit</button>
-            </form>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-            <li><a id="user-name-field">Link</a></li>
+            <li><a id="user-name-field"></a></li>
+            <li><a href="whatodo-login.html" id="logout-btn">Logout</a></li>
           </ul>
+
         </div>
       </div>
     </nav>
@@ -94,6 +90,15 @@
 <script src="js/registerItemEvent.js" type="text/javascript"></script>
 <script type="text/javascript">
   $(document).ready(function () {
+    //user doesn't login redirect
+    $.ajax({
+      url: url + "/account/getusername/",
+      type: "GET",
+      error: function (xhr, textStatus) {
+        if (xhr.status == 403)
+          window.location.href = "whatodo-login.html";
+      }
+    });
     initAllItems("latest_first", "all");
     //register new todo_item button
     $("#create_todo_item").click(function () {
@@ -116,12 +121,14 @@
           }
       );
     });
-    $.get(url + "/account/getusername/", function (data, status) {
-      if (status == "success")
-        $("#user-name-field").text(data[0]);
-    });
   });
-
+  $.get(url + "/account/getusername/", function (data, status) {
+    if (status == "success")
+      $("#user-name-field").text(data[0]);
+  });
+  $("#logout-btn").click(function () {
+    $.post(url + "/account/logout/");
+  });
   //register order by and urgency filter event
   $("#order_by_latest_first").click(function () {
     initAllItems("latest_first", "all");
