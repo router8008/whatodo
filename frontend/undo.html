@@ -38,6 +38,10 @@
               <button type="submit" class="btn btn-default">Submit</button>
             </form>
           </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><a id="user-name-field">Link</a></li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -111,7 +115,11 @@
             }
           }
       );
-    })
+    });
+    $.get(url + "/account/getusername/", function (data, status) {
+      if (status == "success")
+        $("#user-name-field").text(data[0]);
+    });
   });
 
   //register order by and urgency filter event
