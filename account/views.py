@@ -1,4 +1,5 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -31,3 +32,19 @@ class LoginAPIView(APIView):
             return Response(["success"])
         else:
             return Response(["username or password error"], 401)
+
+
+class LogoutAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        logout(request)
+        return Response(["success"])
+
+
+class GetUsernameAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        username = request.user.username
+        return Response([username])

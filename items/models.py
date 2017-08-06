@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class TodoItem(models.Model):
@@ -14,6 +15,7 @@ class TodoItem(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     last_modified_time = models.DateTimeField(auto_now=True)
     urgency = models.CharField(max_length=15, choices=URGENCY_CHOICES, default='normal')
+    user = models.ForeignKey(User, related_name='posted_todo_item_set')
 
     def __str__(self):
         return self.title

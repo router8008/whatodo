@@ -1,15 +1,15 @@
 # external libraries
-from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # inside project modules
-from .models import *
 from .serializers import *
 
 
 class ListTodoItemAPIView(APIView):
     serializer_class = ListTodoItemAPISerializer
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         serializer = self.serializer_class(data=request.query_params)
@@ -17,11 +17,12 @@ class ListTodoItemAPIView(APIView):
         order_by = serializer.validated_data.get('order_by')
         urgency_filter = serializer.validated_data.get('urgency_filter')
 
+        todo_items = TodoItem.objects.filter(user=request.user)
         result_list = list()
         if urgency_filter != 'all':
-            todo_items = TodoItem.objects.filter(urgency=urgency_filter)
+            todo_items = todo_items.filter(urgency=urgency_filter)
         else:
-            todo_items = TodoItem.objects.filter(urgency__in=('normal', 'important', 'vital'))
+            todo_items = todo_items.filter(urgency__in=('normal', 'important', 'vital'))
             if order_by == 'latest_first':
                 todo_items = todo_items.order_by('-created_time')
             elif order_by == 'oldest_first':
@@ -48,10 +49,9 @@ class ListTodoItemAPIView(APIView):
         return Response(result_list)
 
 
-
-
 class AddTodoItemAPIView(APIView):
     serializer_class = AddTodoItemAPISerializer
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -59,13 +59,14 @@ class AddTodoItemAPIView(APIView):
         title = serializer.validated_data.get('title')
         content = serializer.validated_data.get('content')
         urgency = serializer.validated_data.get('urgency')
-        new_item = TodoItem.objects.create(title=title, content=content, urgency=urgency)
+        new_item = TodoItem.objects.create(title=title, content=content, urgency=urgency, user=request.user)
         item_dict = TodoItemSerializer(new_item).data
         return Response(item_dict)
 
 
 class ChangeTodoItemAPIView(APIView):
     serializer_class = ChangeTodoItemAPISerializer
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -85,6 +86,7 @@ class ChangeTodoItemAPIView(APIView):
 
 class DeleteTodoItemAPIView(APIView):
     serializer_class = DeleteTodoItemAPISerializer
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -96,6 +98,7 @@ class DeleteTodoItemAPIView(APIView):
 
 class CheckTodoItemAPIView(APIView):
     serializer_class = CheckTodoItemAPISerializer
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)

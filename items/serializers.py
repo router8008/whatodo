@@ -41,10 +41,28 @@ class ChangeTodoItemAPISerializer(serializers.Serializer):
     content = serializers.CharField(max_length=1000, default="")
     urgency = serializers.ChoiceField(choices=TodoItem.URGENCY_CHOICES)
 
+    def validate(self, data):
+        item_id = data.get('id')
+        if not TodoItem.objects.filter(pk=item_id):
+            raise serializers.ValidationError('item does not exist')
+        return data
+
 
 class DeleteTodoItemAPISerializer(serializers.Serializer):
     id = serializers.IntegerField()
 
+    def validate(self, data):
+        item_id = data.get('id')
+        if not TodoItem.objects.filter(pk=item_id):
+            raise serializers.ValidationError('item does not exist')
+        return data
+
 
 class CheckTodoItemAPISerializer(serializers.Serializer):
     id = serializers.IntegerField()
+
+    def validate(self, data):
+        item_id = data.get('id')
+        if not TodoItem.objects.filter(pk=item_id):
+            raise serializers.ValidationError('item does not exist')
+        return data

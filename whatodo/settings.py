@@ -88,6 +88,18 @@ DATABASES = {
     }
 }
 
+# User account limit
+MIN_USERNAME_LENGTH = 3
+MAX_USERNAME_LENGTH = 255
+MIN_PASSWORD_LENGTH = 4
+MAX_PASSWORD_LENGTH = 255
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'account.authentication.CsrfExemptSessionAuthentication',
+    )
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -105,3 +117,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "frontend/")]
