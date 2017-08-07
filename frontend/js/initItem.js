@@ -21,10 +21,10 @@ var newItem = function (title, content, urgency, lastModifiedTime, id) {
         '<div class="content-body">' +
         '<div class="panel-content">' + content + '</div>' +
         '<p class="text-muted" id="modified_time" ><br />Last Modified: ' + lastModifiedTime + '</p>' +
-        '<button class="btn btn-danger" id="delete_item_btn" style="float:right; margin:0 10px;" >Delete</button>' +
-        '<button class="btn btn-info" id="edit_item_btn" style="float:right; margin:0 10px;">Edit</button>';
+        '<button class="btn btn-danger" id="delete_item_btn" style="float:right; margin:0 5px;" >Delete</button>' +
+        '<button class="btn btn-info" id="edit_item_btn" style="float:right; margin:0 5px;">Edit</button>';
     if (urgency != "finished")
-        item += '<button class="btn btn-success" id="check_item_btn" style="float:right; margin:0 10px;">Check</button>';
+        item += '<button class="btn btn-success" id="check_item_btn" style="float:right; margin:0 5px;">Check</button>';
     item +=
         '</div>' +
         '</div>' +
