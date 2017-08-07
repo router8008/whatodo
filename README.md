@@ -13,15 +13,15 @@ Whatodo is a super awesome web todo list application build with Django, Django R
 ├── items  todo items API module
 │   ├── views.py  API view
 │   ├── serializers.py API arguments check
-│	└── ... Other files
+|   └── ... Other files
 ├── account  User account management app
 │   ├── authentication.py  Session authentication module
 │   ├── validators.py  API arguments check
-│   └── ... Other files
+|   └── ... Other files
 └── whatodo  Project configuration
     ├── settings.py  Common configuration
     ├── urls.py  Root URL router
-    ├── wsgi.py  WSGI support
+    └── wsgi.py  WSGI support
 ```
 
 ## Features
