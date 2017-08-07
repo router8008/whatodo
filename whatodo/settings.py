@@ -108,6 +108,7 @@ class Common(Configuration):
         'DEFAULT_PERMISSION_CLASSES': (
             'rest_framework.permissions.AllowAny',
         ),
+        'DATETIME_FORMAT': '%H:%M:%S, %b %d, %Y',
     }
 
     # Internationalization
