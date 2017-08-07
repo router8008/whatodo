@@ -1,4 +1,4 @@
-## Whatodo: Django Todo List
+# Whatodo: Django Todo List
 
 Whatodo is a super awesome web todo list application build with Django, Django Rest Framework. 
 
