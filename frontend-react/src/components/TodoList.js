@@ -40,9 +40,6 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    // if (!Cookies.get('token')) {
-    //   hashHistory.push('/login');
-    // }
     this.update();
   }
 

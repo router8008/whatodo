@@ -1,7 +1,5 @@
-// import './css/style.css';
 import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import {Router, Route, browserHistory} from 'react-router';
 
 import Todo from './components/Todo';
 import Completed from './components/Completed';
