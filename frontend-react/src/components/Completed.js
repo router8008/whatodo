@@ -3,17 +3,15 @@ import React, {Component} from 'react';
 import Header from './Header';
 import TodoList from './TodoList'
 
-class Todo extends Component {
+class Completed extends Component {
   render() {
     return (
       <div className="container">
-        <Header onTodoPage={true}/>
-        <TodoList
-          onTodoPage={true}
-        />
+        <Header onTodoPage={false}/>
+        <TodoList onTodoPage={false}/>
       </div>
     );
   }
 }
 
-export default Todo;
+export default Completed;

@@ -17,23 +17,41 @@ class EditForm extends Component {
   }
 
   update() {
-    jQuery.ajax({
-      type: 'POST',
-      url: 'http://127.0.0.1:8000/items/changeitem/',
-      data: {
-        id: this.props.id,
-        title: this.state.title,
-        content: this.state.content,
-        urgency: this.state.urgency,
-      },
-      success: () => {
-        this.setState({
-          editing: false
-        });
-        this.props.updateItemList();
-        this.props.cancelEdit();
-      }
-    });
+    if (!this.props.id)
+      jQuery.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:8000/items/additem/',
+        data: {
+          title: this.state.title,
+          content: this.state.content,
+          urgency: this.state.urgency,
+        },
+        success: () => {
+          this.setState({
+            editing: false
+          });
+          this.props.handleCancel();
+          this.props.updateItemList();
+        }
+      });
+    else
+      jQuery.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:8000/items/changeitem/',
+        data: {
+          id: this.props.id,
+          title: this.state.title,
+          content: this.state.content,
+          urgency: this.state.urgency,
+        },
+        success: () => {
+          this.setState({
+            editing: false
+          });
+          this.props.updateItemList();
+          this.props.handleCancel();
+        }
+      });
   }
 
   handleTitleChange(event) {
@@ -58,7 +76,7 @@ class EditForm extends Component {
               <input type="text" className="form-control" placeholder="Title"
                      value={this.state.title} onChange={this.handleTitleChange}/>
               {!this.state.title &&
-              <label className="control-label">
+              <label className="control-label" id="warning">
                 title can't be empty
               </label>
               }
@@ -69,11 +87,6 @@ class EditForm extends Component {
             <div className="col-lg-10">
               <textarea className="form-control" rows="3" placeholder="Content"
                         value={this.state.content} onChange={this.handleContentChange}/>
-              {!this.state.content &&
-              <label className="control-label">
-                content can't be empty
-              </label>
-              }
             </div>
           </div>
           <div className="form-group"><label htmlFor="select" className="col-lg-2 control-label">Urgency</label>
@@ -86,7 +99,7 @@ class EditForm extends Component {
           </div>
           <div className="form-group">
             <div className="col-lg-10 col-lg-offset-2">
-              <button type="button" className="btn btn-default" onClick={this.props.cancelEdit}>Cancel</button>
+              <button type="button" className="btn btn-default" onClick={this.props.handleCancel}>Cancel</button>
               <button type="button" className="btn btn-primary" onClick={() => this.update()}>Save</button>
             </div>
           </div>

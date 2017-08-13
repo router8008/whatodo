@@ -12,7 +12,7 @@ class TodoItem extends Component {
       hiding: false
     };
 
-    this.cancelEdit = this.cancelEdit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
 
   }
 
@@ -52,7 +52,9 @@ class TodoItem extends Component {
     });
   }
 
-  cancelEdit() {
+  handleCancel() {
+    if (!this.props.id)
+      this.props.onCloseNew();
     this.setState({
       editing: false
     });
@@ -92,9 +94,11 @@ class TodoItem extends Component {
             <button className="btn btn-info" style={{float: 'right', margin: '0 5px'}}
                     onClick={() => this.handleEdit()}>Edit
             </button>
+            {this.props.onTodoPage &&
             <button className="btn btn-success" style={{float: 'right', margin: '0 5px'}}
                     onClick={() => this.handleCheck()}>Check
             </button>
+            }
           </div>)
           }
 
@@ -104,7 +108,7 @@ class TodoItem extends Component {
             title={this.props.title}
             content={this.props.content}
             urgency={this.props.urgency}
-            cancelEdit={this.cancelEdit}
+            handleCancel={this.handleCancel}
             updateItemList={() => this.props.updateItemList()}
           />
           }

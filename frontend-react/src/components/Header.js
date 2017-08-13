@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import jQuery from 'jquery';
 
 class Header extends Component {
   render() {
@@ -16,19 +15,26 @@ class Header extends Component {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <a className="navbar-brand" href="todo.html">Whatodo</a>
+              <a className="navbar-brand" href="/todo">Whatodo</a>
             </div>
 
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul className="nav navbar-nav">
-                <li className="active"><a href="todo.html">Todos</a></li>
-                <li><a href="completed.html">Completed</a></li>
-
+                {
+                  this.props.onTodoPage
+                    ? <li className="active">< a href="todo">Todos</a></li>
+                    : <li>< a href="todo">Todos</a></li>
+                }
+                {
+                  this.props.onTodoPage
+                    ? <li><a href="completed">Completed</a></li>
+                    : <li className="active"><a href="completed">Completed</a></li>
+                }
               </ul>
 
               {/*<ul className="nav navbar-nav navbar-right">*/}
-                {/*<li><a id="user-name-field"></a></li>*/}
-                {/*<li><a href="whatodo-login.html" id="logout-btn">Logout</a></li>*/}
+              {/*<li><a id="user-name-field"></a></li>*/}
+              {/*<li><a href="whatodo-login.html" id="logout-btn">Logout</a></li>*/}
               {/*</ul>*/}
 
             </div>
@@ -38,4 +44,5 @@ class Header extends Component {
     );
   }
 }
+
 export default Header;
