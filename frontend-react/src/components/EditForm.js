@@ -77,7 +77,7 @@ class EditForm extends Component {
                      value={this.state.title} onChange={this.handleTitleChange}/>
               {!this.state.title &&
               <label className="control-label" id="warning">
-                title can't be empty
+                title can not be empty
               </label>
               }
             </div>
