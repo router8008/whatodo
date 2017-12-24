@@ -5,4 +5,4 @@ jobs:
       - image: circleci/ruby:2.4.1
     steps:
       - checkout
-      - run: echo "A 3 hello"
+      - run: echo "A 4 hello"
